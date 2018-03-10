@@ -23,5 +23,5 @@ public:
     
     
     vector <ofPolyline> line;
+    float theta;
 };
-
