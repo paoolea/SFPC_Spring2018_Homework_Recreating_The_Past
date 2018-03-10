@@ -16,12 +16,9 @@ void ofApp::draw(){
     ofSeedRandom(0);
     ofNoFill();
     
-   // max +=  100 * ofGetElapsedTimef();
-    
     for (int x = 0; x < 30; x++){
         float randomW = ofRandom(30, 500);
         float randomH = ofRandom(randomW-50,randomW+50);
-       // float randomPosX = ofRandom(-50, 50);
         float randomPosX = ofRandom(-mouseX, mouseX);
         float randomPosY = ofRandom(-50, 50);
         
@@ -30,9 +27,7 @@ void ofApp::draw(){
         ofDrawRectangle(0, 0, randomW, randomH);
         ofPopMatrix();
     }
-    
-   // cout << max << endl;
-   // max = 0;
+
 }
 
 //--------------------------------------------------------------

@@ -14,26 +14,16 @@ void ofApp::update(){
 void ofApp::draw(){
     ofSetColor(255);
     
-    
     float time = ofGetElapsedTimef();
     float timeMult = ofGetElapsedTimef()*0.5;
     float timeScale = ofGetElapsedTimef()*2;
     float total = 20;
-    
-    //    float offset = ofMap(sin(time), -1, 1, 0, 3.7);
-    //    for (int i = 0; i < 40; i++){
-    //        float x = ofMap(sin(time + i*offset), -1, 1, 200,600);
-    //        ofDrawCircle(x, i*20 + 10, 10);
-    //    }
-    
     
     for (int i = 0; i < total; i++){
         for (int f = 0; f < total; f++){
             float x = ofMap(sin(timeMult * (i*0.1+1)), -1, 1, 50, 70);
             float scal = ofMap(sin(timeScale * (i*0.1+1)), -1, 1, 10, 30);
             ofDrawCircle(20+x*f, i*40 + 20, scal);
-           // ofDrawCircle(10+x, i*40 + 20, scal);
-           // ofDrawRectangle(20+x*f, i*40 + 20, scal, scal);
         }
     }
 }

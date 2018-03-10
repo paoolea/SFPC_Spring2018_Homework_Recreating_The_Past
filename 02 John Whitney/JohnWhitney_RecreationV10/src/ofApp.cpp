@@ -29,11 +29,7 @@ void ofApp::draw(){
 		float y = ofGetHeight() / 2 + ofMap(sinOfTimeY, -1, 1, 0, 300) - 150;
         float color = 10 + (i * 10);
 
-		//cout << y << endl;
 		ofSetColor(223,255, 255, 255);
-		//ofDrawCircle(x, y, 5);
-        //ofSetColor(223,141, 46, color);
-
 		ofPoint pt;
 		pt.x = x;
 		pt.y = y;

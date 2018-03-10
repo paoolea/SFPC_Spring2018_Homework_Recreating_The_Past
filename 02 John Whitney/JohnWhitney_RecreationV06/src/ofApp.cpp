@@ -44,10 +44,6 @@ void ofApp::draw(){
             ofDrawCircle(left+x2+posX*150, top+i*30+y , sinOfTimeScaleDown);
         }
     }
-    
-    /*float sinOfTime = sin(ofGetElapsedTimef());
-    float sinOfTimeRemmapped = ofMap(sinOfTime, -1, 1, 0, 20);
-    ofDrawCircle( 300 , 400, sinOfTimeRemmapped);*/
 }
 
 //--------------------------------------------------------------

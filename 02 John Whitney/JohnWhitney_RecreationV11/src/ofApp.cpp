@@ -25,7 +25,6 @@ void ofApp::draw() {
 		float sinOfTimeY = sin((time*(2+i)) *0.3);
 		float y = ofGetHeight() / 2 + ofMap(sinOfTimeY, -1, 1, 0, 400) - 200;
 
-		//cout << y << endl;
 		ofSetColor(0, 0, 255 - (5*i));
 		ofDrawCircle(x, y, 5);
 

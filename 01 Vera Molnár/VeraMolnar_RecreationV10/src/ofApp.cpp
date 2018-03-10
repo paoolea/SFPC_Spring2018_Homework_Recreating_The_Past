@@ -35,9 +35,7 @@ void ofApp::draw(){
     ofNoFill();
     ofSeedRandom(0);
     ofSetLineWidth(2);
-    
-    // max +=  ((mouseX - 30)/10) * ofGetElapsedTimef();
-    // min -=  ((mouseX - 400)/10) * ofGetElapsedTimef();
+
     if(!m_stopSound){
         max += (scaledVol * wLine)* ofGetElapsedTimef();
         min += (-scaledVol * wLine)* ofGetElapsedTimef();

@@ -3,110 +3,110 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
-    
-    total = 5;
-    line.resize(total);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSetColor(255);
-    ofSetLineWidth(2);
-
+    ofSetLineWidth(1);
+    ofSeedRandom(750);
     
+    float total = 10;
+    float myWidthMax = 300;
+    float myWidthMin = 100;
     float time = ofGetElapsedTimef();
-    float width = 250;
-    float sinOfTimeX;
-    float centerX;
     
-    for(int i = 0; i < total; i++){
-        if(i > 0){
-            width = 110 - (i*10);
-            centerX = width/2;
-            sinOfTimeX = sin((time*((i+1)*30))*0.3);
-        } else {
-            width = 250;
-            centerX = 125;
-            sinOfTimeX = sin((time*((i+1)*30))*0.3);
-        }
+    line.resize(total);
+    
+    for(int i = 3; i < total; i++){
+        float xorig = 400;
+        float yorig = 400;
+        float radius = ofMap(sin(time*5*i), -1, 1, myWidthMin, myWidthMax);
+        float angle = ofGetElapsedTimef()*3;
+        float colorR = ofRandom(0, 255);
+        float colorG = ofRandom(0, 255);
+        float colorB = ofRandom(0, 255);
+        //float strokeW = ofMap(sin(time*5*i), -1, 1, 1, 5);
         
-        
-        float sinOfTimePosX = ofMap(sinOfTimeX, -1, 1, 0, width);
-        float sinOfTimeY = sin((time*10)*0.3);
-        float y = ofMap(sinOfTimeY, -1, 1, -60, ofGetHeight()+60);
-        float x = ofGetWidth()/2 + sinOfTimePosX - centerX;
-        
-        ofDrawCircle(x, y , 2);
+        // Setup
+        //ofSetLineWidth(strokeW);
+        ofSetColor(colorR, colorG, colorB);
         
         ofPoint pt;
-        pt.x = x;
-        pt.y = y;
+        pt.x = xorig + radius * cos(angle);
+        pt.y = yorig + radius * sin(angle);
         
-        if (line[i].size() > 100){
+        line[i].addVertex(pt);
+        
+        if (line[i].size() > 5000){
             line[i].getVertices().erase(line[i].getVertices().begin());
         }
         
-        line[i].addVertex(pt);
         line[i].draw();
+        ofDrawCircle(pt, 5);
+        
+        
+        
+        
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+    
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::dragEvent(ofDragInfo dragInfo){
+    
 }

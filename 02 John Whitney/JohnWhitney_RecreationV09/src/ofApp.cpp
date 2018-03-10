@@ -27,7 +27,6 @@ void ofApp::draw() {
 	ofSetColor(255);
 	ofSetLineWidth(3);
 
-
 	float time = ofGetElapsedTimef();
 	float width = 250;
 	float sinOfTimeX;
@@ -61,9 +60,7 @@ void ofApp::draw() {
 		sinOfTimePosX = ofMap(sinOfTimeX, -1, 1, 0, width);
 		x = ofGetWidth() / 2 + sinOfTimePosX - centerX;
 		
-		//cout << y << endl;
 		ofSetColor(255, 0, 0);
-		//ofDrawCircle(x, y, 10);
 		ofSetColor(colors[i].x, colors[i].y, colors[i].z);
 
 		// Create points and lines

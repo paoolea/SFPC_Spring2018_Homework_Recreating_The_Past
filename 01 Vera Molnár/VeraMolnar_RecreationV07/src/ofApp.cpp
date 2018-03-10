@@ -24,8 +24,6 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     scaledVol = ofMap(smoothedVol, 0.0, 0.17, 0.0, 0.5, true);
-    // cout << ofRandom(scaledVol-1, scaledVol) << endl;
-   // ofSoundUpdate();
 }
 
 //--------------------------------------------------------------
