@@ -16,14 +16,14 @@ void ofApp::draw(){
     ofSetLineWidth(1);
     ofSeedRandom(750);
     
-    float total = 4;
+    float total = 10;
     float myWidthMax = 300;
-    float myWidthMin = 50;
+    float myWidthMin = 100;
     float time = ofGetElapsedTimef();
     
     line.resize(total);
     
-    for(int i = 1; i < total; i++){
+    for(int i = 3; i < total; i++){
         float xorig = 400;
         float yorig = 400;
         float radius = ofMap(sin(time*5*i), -1, 1, myWidthMin, myWidthMax);
@@ -43,12 +43,16 @@ void ofApp::draw(){
         
         line[i].addVertex(pt);
         
-        if (line[i].size() > 300){
+        if (line[i].size() > 5000){
             line[i].getVertices().erase(line[i].getVertices().begin());
         }
         
         line[i].draw();
         ofDrawCircle(pt, 5);
+        
+        
+        
+        
     }
 }
 

@@ -15,6 +15,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSeedRandom(0);
+    ofSetLineWidth(2);
     
     float time = ofGetElapsedTimef();
     float sinOfTime = sin(time);

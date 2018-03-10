@@ -13,34 +13,29 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofSeedRandom(0);
+    ofSetLineWidth(3);
     ofNoFill();
     
     
-    for(int i = 0; i < 5; i++){
-        float sinOfTime = sin(ofGetElapsedTimef()+i);
-        float sinOfTimePlus = sin((ofGetElapsedTimef()+i)*5);
-        float sinOfTimeRemmapped = ofMap(sinOfTime, -1, 1, 30, 300);
-        float sinOfTimeRotate = ofMap(sinOfTime, -1, 1, 0, 90);
-        float sinOfTimeRotateB = ofMap(sinOfTime, -1, 1, 0, -90);
-        float sinOfTimeColorR = ofMap(sinOfTimePlus, -1, 1, 0, 255);
-        float sinOfTimeStroke = ofMap(sinOfTimePlus, -1, 1, 0, 3);
+    for(int i = 0; i < 20; i++){
+        float sinOfTimePlus = sin((ofGetElapsedTimef()+i)*0.5);
+        float sinOfTimeRemmapped = ofMap(sinOfTimePlus, -1, 1, 90, (((ofGetElapsedTimef()*i)*i)-300));
+        float colorR = ofRandom(50, 255);
+        float colorG = ofRandom(50, 255);
+        float colorB = ofRandom(50, 255);
         
-        ofSetColor(sinOfTimeColorR, 255, 60);
+        ofSetColor(colorR, 255, 255, 100);
         
         ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, sinOfTimeRemmapped);
         
-        ofSetColor(255);
-        ofPushMatrix();
-        ofTranslate(ofGetWidth()/2 - sinOfTimeRemmapped/2, ofGetHeight()/2 - sinOfTimeRemmapped/2);
-        ofRotateZ(sinOfTimeRotate);
-        ofDrawRectangle(0, 0, sinOfTimeRemmapped, sinOfTimeRemmapped);
-        ofPopMatrix();
         
-        ofPushMatrix();
+        
+        /*ofPushMatrix();
         ofTranslate(ofGetWidth()/2 - sinOfTimeRemmapped/2, ofGetHeight()/2 - sinOfTimeRemmapped/2);
         ofRotateZ(sinOfTimeRotateB);
         ofDrawRectangle(0, 0, sinOfTimeRemmapped, sinOfTimeRemmapped);
-        ofPopMatrix();
+        ofPopMatrix();*/
     }
     
     //ofDrawCircle(ofGetWidth()/2, ofGetHeight()/2, sinOfTimeRemmapped);

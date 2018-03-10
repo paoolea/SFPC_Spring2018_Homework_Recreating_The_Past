@@ -26,6 +26,16 @@ void ofApp::draw(){
     float time = ofGetElapsedTimef();
     
     
+    for(int f = 0; f < total*10; f++){
+        float angle = f * (TWO_PI  / (total*10));
+        float movSS = ofMap(sin(time*(f*0.1)), -1, 1, radiusSS, radiusB+100);
+        float xSS = centerX + cos(angle) * (movSS);
+        float ySS = centerY + sin(angle) * (movSS);
+        
+        ofSetColor(255, 255, 255, 130);
+        ofDrawCircle(xSS, ySS, size);
+    }
+    
     for(int i = 0; i < total; i++){
         float angle = i * (TWO_PI  / total);
         float x = centerX + cos(angle) * (radiusB);
@@ -36,23 +46,12 @@ void ofApp::draw(){
         float xS = centerX + cos(angle) * mov;
         float yS = centerY + sin(angle) * mov;
        
-        
-        //ofDrawCircle(x, y, size);
-        //ofDrawCircle(xS, yS, size);
+
+        ofSetColor(255);
         ofDrawLine(x, y, xS, yS);
-        
-        // points
-       // ofDrawCircle(xM, yM, size);
     }
     
-    for(int f = 0; f < total*10; f++){
-        float angle = f * (TWO_PI  / (total*10));
-        float movSS = ofMap(sin(time*(f*0.1)), -1, 1, radiusSS, radiusB+100);
-        float xSS = centerX + cos(angle) * (movSS);
-        float ySS = centerY + sin(angle) * (movSS);
-
-        ofDrawCircle(xSS, ySS, size);
-    }
+   
 }
 
 //--------------------------------------------------------------
