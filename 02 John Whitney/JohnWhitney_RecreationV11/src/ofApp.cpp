@@ -13,6 +13,7 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
 	ofSetColor(0);
+    ofSetLineWidth(2);
 
 	float time = ofGetElapsedTimef();
 	float total = 30;
@@ -26,7 +27,7 @@ void ofApp::draw() {
 		float y = ofGetHeight() / 2 + ofMap(sinOfTimeY, -1, 1, 0, 400) - 200;
 
 		ofSetColor(0, 0, 255 - (5*i));
-		ofDrawCircle(x, y, 5);
+		//ofDrawCircle(x, y, 5);
 
 		ofPoint pt;
 		pt.x = x;
