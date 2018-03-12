@@ -22,27 +22,27 @@ void ofApp::draw(){
     line.resize(total);
     
     for (int i = 1; i < total; i++) {
-        float sinOfTimeX = sin((time * (2 + (i*0.1)))*0.5);
+        float sinOfTimeX = sin((time * (2 + (i*0.1)))*0.2);
         float x = ofMap(sinOfTimeX, -1, 1, 200, ofGetWidth() - 200);
-        float sinOfTimeY = sin((time * (9 + (i*0.1)))*0.5);
-        float y = ofGetHeight() / 2 + ofMap(sinOfTimeY, -1, 1, 0, 200) - 100;
+        float sinOfTimeY = sin((time * (9 + (i*0.1)))*0.2);
+        float y = ofGetHeight() / 2 + ofMap(sinOfTimeY, -1, 1, 0, 300) - 150;
         float scale = 20 + (i * 20);
         float color = 80 + (i * 10);
         
-        ofSetColor(color,0, 0);
+        ofSetColor(255);
         ofPushMatrix();
         ofTranslate(x-scale/2, y-scale/3);
         ofDrawTriangle(0, 0, scale, 0, scale/2, scale/1.2);
         ofPopMatrix();
         
-        float sinOfTimeXA = sin((time * (2 + (i*0.1)))*0.5);
+        float sinOfTimeXA = sin((time * (2 + (i*0.1)))*0.2);
         float xA = ofMap(sinOfTimeXA, -1, 1, ofGetWidth() - 200, 200);
-        float sinOfTimeYA = sin((time * (9 + (i*0.1)))*0.5);
-        float yA = ofGetHeight() / 2 + ofMap(sinOfTimeYA, -1, 1, 200, 0) - 100;
+        float sinOfTimeYA = sin((time * (9 + (i*0.1)))*0.2);
+        float yA = ofGetHeight() / 2 + ofMap(sinOfTimeYA, -1, 1, 300, 0) - 150;
         float scaleA = 20 + (i * 20);
         float colorA = 10 + (i * 15);
         
-        ofSetColor(colorA, colorA, colorA, 50);
+        ofSetColor(colorA, colorA, colorA, 70);
         ofPushMatrix();
         ofTranslate(xA-scaleA/2, yA-scaleA/3);
         ofDrawTriangle(0, 0, scaleA, 0, scaleA/2, scaleA/1.2);
