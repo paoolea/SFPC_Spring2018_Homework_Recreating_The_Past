@@ -3,6 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
+    
+    m_over.load("over.png");
 }
 
 //--------------------------------------------------------------
@@ -23,9 +25,14 @@ void ofApp::draw(){
         for (int f = 0; f < total; f++){
             float x = ofMap(sin(timeMult * (i*0.1+1)), -1, 1, 50, 70);
             float scal = ofMap(sin(timeScale * (i*0.1+1)), -1, 1, 10, 30);
+            float color = ofMap(sin(timeScale * (i*0.1+1)), -1, 1, 5, 170);
+            
+            ofSetColor(color, color, color);
             ofDrawCircle(20+x*f, i*40 + 20, scal);
         }
     }
+    
+    m_over.draw(0, 0);
 }
 
 //--------------------------------------------------------------
