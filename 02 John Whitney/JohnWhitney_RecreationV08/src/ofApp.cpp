@@ -3,7 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
-    theta = 0;
+    ofSetCircleResolution(80);
+    
+    m_over.load("over.png");
 }
 
 //--------------------------------------------------------------
@@ -15,41 +17,49 @@ void ofApp::update(){
 void ofApp::draw(){
     ofSetColor(255);
     ofSetLineWidth(2);
-    ofSeedRandom(750);
+    ofSeedRandom(0);
     
-    float total = 7;
     float time = ofGetElapsedTimef();
-    float myWidthMax;
-    float xorig = 400;
-    float yorig = 400;
+    float centerX = ofGetWidth()/2;
+    float centerY = ofGetHeight()/2;
+    float totalX = 10;
+    float totalY = 19;
+    float size = 100;
+    float spaceX = size;
+    float spaceY = size-50;
     
-    line.resize(total);
     
-    for(int i = 1; i < total; i++){
-        myWidthMax = 300 - (i*30);
-        float radius = ofMap(sin(time*10), -1, 1, 0, myWidthMax);
-        float angle = ofGetElapsedTimef()*(i*2);
-        float color = 255 - (i * 45);
-        
-        ofSetColor(223,255, 255, color);
-        
-        ofPoint pt;
-        pt.x = xorig + radius * cos(angle);
-        pt.y = yorig + radius * sin(angle);
-        
-        line[i].addVertex(pt);
-        
-        if (line[i].size() > i*30){
-            line[i].getVertices().erase(line[i].getVertices().begin());
+    for(int i = 0; i < totalY; i++){ // Y
+        for(int f = totalX; f >= 0; f--){ // X
+            float color = ofRandom(50, 250);
+            
+            float sinOfTimeX = sin((time+(f*50)) * 0.5);
+            float moveX = ofMap(sinOfTimeX, -1, 1, -50, 50);
+            float x = size - (f * spaceX) + moveX;
+            
+            float sinOfTimeY = sin((time+(i*50)) * 2);
+            float moveY = ofMap(sinOfTimeY, -1, 1, 0, 50);
+            float y = (ofGetHeight() - (i * spaceY) - 70) + moveY;
+            
+            int result = 2 * (i / 2);
+            if(i == result){
+                x = (((f * spaceX) - 50) + moveX) - size;
+            } else {
+                x = ((f * spaceX) + moveX) - size;
+            }
+            
+            ofPushMatrix();
+                ofSetColor(color, color, color);
+                ofDrawRectRounded(x, y, size, size+50, 50);
+            
+                ofSetColor(0, 0, 0, 30);
+                ofDrawRectRounded(x, y, size+1, size+51, 50);
+            ofPopMatrix();
         }
-        
-        line[i].draw();
-        
-        ofSetColor(255);
-        ofDrawCircle(pt, 5);
-     
     }
    
+    ofSetColor(255, 255, 255, 150);
+    m_over.draw(0, 0);
 }
 
 //--------------------------------------------------------------

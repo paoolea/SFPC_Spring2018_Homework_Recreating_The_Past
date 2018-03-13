@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
 	ofBackground(0);
+    ofEnableSmoothing();
 }
 
 //--------------------------------------------------------------
@@ -12,34 +13,39 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	ofSetColor(0);
-    ofSetLineWidth(2);
+	ofSetColor(255);
+    ofSetLineWidth(5);
+    
+    float time = ofGetElapsedTimef();
+    float centerX = ofGetWidth()/2;
+    float centerY = ofGetHeight()/2;
+    float repet = 55;
+    float space = 5;
+    float size = 30;
+    
+    ofTranslate(centerX, centerY);
+    ofBeginShape();
+    for(float b = 0; b < repet; b++){
+        
+        float sinOfTime = sin((time + (b*5)) * 0.5);
+        float moveLine = ofMap(sinOfTime, -1, 1, 0, TWO_PI);
+        float moveLine2 = ofMap(sinOfTime, -1, 1, TWO_PI, 0);
+        
+        for(float a = moveLine2; a < moveLine; a += 0.01){
+            float radius = size + (b * space);
+            float x = radius * cos(a);
+            float y = radius * sin(a);
+            float color = 255 - (b * (255/repet));
+            
+            ofFill();
+            ofSetColor(color);
+            ofDrawCircle(x, y, 2);
+            ofNoFill();
+            //ofVertex(x, y);
+        }
+    }
+    ofEndShape();
 
-	float time = ofGetElapsedTimef();
-	float total = 30;
-
-	line.resize(total);
-
-	for (int i = 0; i < total; i++) {
-		float sinOfTimeX = sin((time * (10+i))*0.3);
-		float x = ofMap(sinOfTimeX, -1, 1, 100, ofGetWidth() - 100);
-		float sinOfTimeY = sin((time*(2+i)) *0.3);
-		float y = ofGetHeight() / 2 + ofMap(sinOfTimeY, -1, 1, 0, 400) - 200;
-
-		ofSetColor(0, 0, 255 - (5*i));
-		//ofDrawCircle(x, y, 5);
-
-		ofPoint pt;
-		pt.x = x;
-		pt.y = y;
-
-		if (line[i].size() > (i + 1)) {
-			line[i].getVertices().erase(line[i].getVertices().begin());
-		}
-
-		line[i].addVertex(pt);
-		line[i].draw();
-	}
 }
 
 //--------------------------------------------------------------

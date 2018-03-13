@@ -39,9 +39,7 @@ void ofApp::draw(){
             if(f == 2) space = 0.3;
             if(f > 2) space = 0.2;
             
-           // float sinOfTime = sin((time/f * ((f+1)*5))*0.3);
             float sinOfTime = sin(((time/((f+1)*2)) * 0.5));
-
             float rotationZ = ofMap(sinOfTime, -1, 1, 0, 360);
             
             ofPoint p1 = ofPoint(0, -15 + (i*space));

@@ -22,6 +22,5 @@ public:
     void gotMessage(ofMessage msg);
     
     
-    vector <ofPolyline> line;
-    float theta;
+    ofImage m_over;
 };

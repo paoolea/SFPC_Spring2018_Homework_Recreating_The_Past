@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
+    ofEnableSmoothing();
     
     m_over.load("over.png");
 }
@@ -14,25 +15,35 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofSetLineWidth(2);
+    ofNoFill();
     ofSetColor(255);
+    ofSetRectMode(OF_RECTMODE_CENTER);
     
     float time = ofGetElapsedTimef();
-    float timeMult = ofGetElapsedTimef()*0.5;
-    float timeScale = ofGetElapsedTimef()*2;
-    float total = 20;
+    float total = 110;
+    float centerX = ofGetWidth()/2;
+    float centerY = ofGetWidth()/2;
+    float space = 15;
+    float degree = 2.3;
     
-    for (int i = 0; i < total; i++){
-        for (int f = 0; f < total; f++){
-            float x = ofMap(sin(timeMult * (i*0.1+1)), -1, 1, 50, 70);
-            float scal = ofMap(sin(timeScale * (i*0.1+1)), -1, 1, 10, 30);
-            float color = ofMap(sin(timeScale * (i*0.1+1)), -1, 1, 5, 170);
-            
-            ofSetColor(color, color, color);
-            ofDrawCircle(20+x*f, i*40 + 20, scal);
-        }
+    
+    for(int i = 0; i < total; i++){
+        float color = 255 - (i * (255/total));
+        float size = 10 + (i*space);
+        float rotate = i * degree;
+        float sinOfTime = sin((time * 0.75) * 0.5);
+        float rotationZ = ofMap(sinOfTime, -1, 1, -rotate, rotate);
+        
+        ofSetColor(255, 255, 255, color);
+        ofPushMatrix();
+            ofTranslate(centerX, centerY);
+            ofRotateZ(rotationZ);
+            ofDrawRectangle(0, 0, size, size);
+        ofPopMatrix();
     }
     
-    m_over.draw(0, 0);
+    //m_over.draw(centerX, centerY);
 }
 
 //--------------------------------------------------------------
