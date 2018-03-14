@@ -24,5 +24,4 @@ class ofApp : public ofBaseApp{
     //ofPolyline line;
     
     vector <ofPolyline> line;
-    float total;
 };

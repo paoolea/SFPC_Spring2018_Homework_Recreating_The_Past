@@ -21,17 +21,17 @@ void ofApp::draw(){
     
     float time = ofGetElapsedTimef();
     float sinOfTime = sin(time);
-    float total = 40;
-    float totalDupli = 15;
+    float total = 20;
+    float totalDupli = 35;
     float num = 1;
     float centerX = ofGetWidth()/2;
     float centerY = ofGetWidth()/2;
     float space;
-    float multi = 4;
+    float multi = 1.5;
     
     for(int i = 0; i < total; i++){
         float color;
-        color = 255 - (i * 15);
+        color = (i * (255/total));
 
         for(int f = 1; f < totalDupli; f++){
             
@@ -41,33 +41,18 @@ void ofApp::draw(){
             
             float sinOfTime = sin(((time/((f+1)*2)) * 0.5));
             float rotationZ = ofMap(sinOfTime, -1, 1, 0, 360);
-            
-            ofPoint p1 = ofPoint(0, -15 + (i*space));
-            ofPoint p2 = ofPoint(15 - (i*space), -2 + (i*(space/3)));
-            ofPoint p3 = ofPoint(7 - (i*(space/2)), 13 - (i*(space)));
-            ofPoint p4 = ofPoint(-7 + (i*(space/2)), 13 - (i*(space)));
-            ofPoint p5 = ofPoint(-15 + (i*space), -2 + (i*(space/3)));
 
             ofPushMatrix();
                 ofSetColor(255, 255, 255, color);
-                ofTranslate(centerX, centerY - (((f*multi)+1)));
-                ofScale(1 * (f*multi), 1 * (f*multi));
+                ofTranslate(centerX, centerY);
                 ofRotateZ(rotationZ);
-                ofBeginShape();
-                    ofVertex(p1);
-                    ofVertex(p2);
-                    ofVertex(p3);
-                    ofVertex(p4);
-                    ofVertex(p5);
-                ofEndShape(true);
-            
-                ofSetColor(255);
-                //ofDrawCircle(0, 0, 10);
+                ofSetCircleResolution(5);
+                ofDrawCircle(0, 0, 30*f + ((i * multi)));
             ofPopMatrix();
         }
     }
     
-    
+    ofSetColor(255);
     m_oveR.draw(0, 0);
 }
 

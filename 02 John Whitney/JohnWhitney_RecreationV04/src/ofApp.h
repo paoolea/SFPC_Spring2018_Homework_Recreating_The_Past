@@ -20,10 +20,5 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
-    
-    vector <ofPolyline> line;
-    vector <ofPolyline> line2;
-    vector <ofPolyline> lineB;
-    vector <ofPolyline> lineB2;
+
 };

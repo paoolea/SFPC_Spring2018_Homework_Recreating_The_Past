@@ -3,10 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
-    
-    line.resize(3);
-    
-    total = 35;
+    ofEnableSmoothing();
 }
 
 //--------------------------------------------------------------
@@ -22,7 +19,8 @@ void ofApp::draw(){
     
     float time = ofGetElapsedTimef();
     float sinOfTime = sin(time);
-    float totalDupli = 5;
+    float total = 20;
+    float totalDupli = 4;
     float num = 1;
     float centerX = ofGetWidth()/2;
     float centerY = ofGetWidth()/2;
@@ -36,12 +34,12 @@ void ofApp::draw(){
             float sinOfTime = sin((time * ((i+1)*0.5))*0.3);
             float rotationZ = ofMap(sinOfTime, -1, 1, 0, 360);
             
+            
             ofPoint p1 = ofPoint(0, -75 + (i*space));
             ofPoint p2 = ofPoint(70 - (i*space), -25 + (i*(space/3)));
             ofPoint p3 = ofPoint(40 - (i*(space/2)), 55 - (i*(space/2)));
             ofPoint p4 = ofPoint(-40 + (i*(space/2)), 55 - (i*(space/2)));
             ofPoint p5 = ofPoint(-70 + (i*space), -25 + (i*(space/3)));
-            
             
             ofPushMatrix();
                 ofSetColor(255, 255, 255, color);
@@ -60,26 +58,8 @@ void ofApp::draw(){
             
                 //ofDrawCircle(0, 0, 20);
             ofPopMatrix();
-            
-            /*
-            
-            ofPushMatrix();
-            
-            ofTranslate(centerX, centerY - (70 * ((f*multi)+1)));
-            ofScale(1 + (f*multi), 1 + (f*multi));
-            ofDrawLine(p1, p2);
-            ofDrawLine(p2, p3);
-            ofDrawLine(p3, p4);
-            ofDrawLine(p4, p5);
-            ofDrawLine(p5, p1);
-            ofPopMatrix();
-            */
-            
         }
     }
-    
-    
-
 }
 
 //--------------------------------------------------------------
