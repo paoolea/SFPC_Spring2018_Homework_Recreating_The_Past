@@ -6,15 +6,7 @@ void ofApp::setup() {
 	ofSeedRandom(0);
     ofEnableSmoothing();
 
-	total = 5;
-	line.resize(total);
-	colors.resize(total);
 
-	colors[0] = ofPoint(185, 29, 159);
-	colors[1] = ofPoint(101, 179, 56);
-	colors[2] = ofPoint(223, 141, 46);
-	colors[3] = ofPoint(244, 210, 232);
-	colors[4] = ofPoint(178, 40, 45);
 }
 
 //--------------------------------------------------------------
@@ -25,56 +17,35 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
 	ofSetColor(255);
-	ofSetLineWidth(3);
+	ofSetLineWidth(2);
+    ofNoFill();
+    
+    float time = ofGetElapsedTimef();
+    float centerX = ofGetWidth()/2;
+    float centerY = ofGetHeight()/2;
+    float total = 15;
+    float totalDupli = 15;
+    float radius = 50;
+    float space = 20;
 
-	float time = ofGetElapsedTimef();
-	float width = 250;
-	float sinOfTimeX;
-	float centerX;
-
-	for (int i = 0; i < total; i++) {
-		float sinOfTimePosX;
-		float sinOfTimeY = sin((time * 10)*0.3);
-		float y = ofMap(sinOfTimeY, -1, 1, -60, ofGetHeight() + 60);
-		float x;
-
-		// Detect when the element touch the Top or Bottom
-		if (y >= ofGetHeight() + 50) change = true;
-		if (y <= -50) change = false;
-
-		// When is the first element the with change
-		if (i > 0) {
-			ofSetLineWidth(3);
-			if (change) width = -(170 - (i * 40));
-			if (!change) width = 170 - (i * 40);
-			centerX = width / 2;
-			sinOfTimeX = sin((time*((i + 1) * 30))*0.3);
-		} else {
-			ofSetLineWidth(5);
-			width = 350;
-			centerX = width / 2;
-			sinOfTimeX = sin((time*((i + 1) * 30))*0.3);
-		}
-
-		
-		sinOfTimePosX = ofMap(sinOfTimeX, -1, 1, 0, width);
-		x = ofGetWidth() / 2 + sinOfTimePosX - centerX;
-		
-		ofSetColor(255, 0, 0);
-		ofSetColor(colors[i].x, colors[i].y, colors[i].z);
-
-		// Create points and lines
-		ofPoint pt;
-		pt.x = x;
-		pt.y = y;
-
-		if(line[i].size() > 10*(i+1)) {
-			line[i].getVertices().erase(line[i].getVertices().begin());
-		}
-
-		line[i].addVertex(pt);
-		line[i].draw();
-	}
+    ofTranslate(centerX, centerY);
+    for(int i = 0; i < total; i++){
+        for(int a = 1; a < totalDupli; a++){
+            float size = 10 + (i * 10);
+            float color = (i * (100/total));
+            
+            float angle = ofMap(a, 0, totalDupli, 0, TWO_PI*2);
+            float x = ((radius + (a * space)) * cos(angle));
+            float y = ((radius + (a * space)) * sin(angle));
+            
+            ofSetColor(color);
+            ofPushMatrix();
+            ofRotateZ((i*3) + (a * 0));
+            ofDrawRectangle(x, y, size, size);
+            ofPopMatrix();
+        }
+    }
+	
 }
 
 //--------------------------------------------------------------

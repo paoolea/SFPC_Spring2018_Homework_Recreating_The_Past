@@ -19,7 +19,7 @@ void ofApp::draw(){
     float t = ofGetElapsedTimef() * .2;
     float centerX = ofGetWidth()/2;
     float centerY = ofGetHeight()/2;
-    float totalDots = 90;
+    float totalDots = 500;
     float size = 3;
     
     line.resize(totalDots);

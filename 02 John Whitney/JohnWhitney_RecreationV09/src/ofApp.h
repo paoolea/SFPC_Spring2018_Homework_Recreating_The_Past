@@ -21,8 +21,4 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
-	vector <ofPolyline> line;
-	vector <ofPoint> colors;
-	float total;
-	bool change;
 };
