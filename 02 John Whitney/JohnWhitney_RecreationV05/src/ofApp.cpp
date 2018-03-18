@@ -21,15 +21,15 @@ void ofApp::draw(){
     ofSetRectMode(OF_RECTMODE_CENTER);
     
     float time = ofGetElapsedTimef();
-    float total = 110;
+    float total = 70;
     float centerX = ofGetWidth()/2;
     float centerY = ofGetWidth()/2;
-    float space = 15;
+    float space = 10;
     float degree = 2.3;
-    
+    float colorMax = 230;
     
     for(int i = 0; i < total; i++){
-        float color = 255 - (i * (255/total));
+        float color = colorMax - (i * (colorMax/total));
         float size = 10 + (i*space);
         float rotate = i * degree;
         float sinOfTime = sin((time * 0.75) * 0.5);
@@ -43,7 +43,7 @@ void ofApp::draw(){
         ofPopMatrix();
     }
     
-    //m_over.draw(centerX, centerY);
+    m_over.draw(centerX, centerY);
 }
 
 //--------------------------------------------------------------
