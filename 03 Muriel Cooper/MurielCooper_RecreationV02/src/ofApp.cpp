@@ -2,69 +2,141 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(255, 244, 235);
-    total = 12;
-    
-    font.load("fonts/HelveticaNeueLTStd-Blk.otf", 100, true, true, 1);
+    ofBackground(0);
+    ofEnableSmoothing();
+    ofSetCircleResolution(80);
+    ofSetLineWidth(2);
 
-    count = 0;
+    font.load("fonts/HelveticaNeueLTStd-Blk.otf", 150, true, true, true);
+    myString = "SFPC";
+    loadCharacters(myString);
+
+    //////////////
+    soundStream.printDeviceList();
+    int bufferSize = 256;
     
-    colors.resize(4);
+    left.assign(bufferSize, 0.0);
+    right.assign(bufferSize, 0.0);
+    volHistory.assign(400, 0.0);
     
-    colors[0] = ofPoint(241, 111, 44);
-    colors[1] = ofPoint(106, 173, 196);
-    colors[2] = ofPoint(251, 211, 48);
-    colors[3] = ofPoint(255, 255, 255);
+    bufferCounter    = 0;
+    drawCounter        = 0;
+    smoothedVol     = 0.0;
+    scaledVol        = 0.0;
+    
+    soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
+}
+
+//--------------------------------------------------------------
+void ofApp::loadCharacters(string s) {
+    characters = font.getStringAsPoints(s);
+}
+
+//--------------------------------------------------------------
+ofPoint ofApp::centerCharacter(string s) {
+    auto bounds = font.getStringBoundingBox(s, 0, 0);
+    return ofPoint(-bounds.width/2, bounds.height/2);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+     scaledVol = ofMap(smoothedVol, 0.0, 0.17, 0.0, 1.0, true);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSeedRandom(0);
-    ofEnableAlphaBlending();
-    ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+    float sizeCir = 1;
+    float jumpDots = 2;
+    float coutDot = 50;
+    float spaceZdots = 3;
+    float maxColor = 255;
     
-    float time = ofGetElapsedTimef();
-    float centerX = ofGetWidth()/2;
-    float centerY = ofGetHeight()/2;
-    float radius = 200;
-    float colorEnd = 240;
+    float time = ofGetElapsedTimef() * 1.5;
+    float stageW = ofGetWidth();
+    float stageH = ofGetHeight();
+
+    cam.begin();
+    ofPushMatrix();
+    //ofTranslate(stageW/2, stageH/2 - 10);
+     ofTranslate(0, -120);
+    ofTranslate(centerCharacter(myString));
+    ofSetLineWidth(2);
     
-    for(float i = 0; i < total; i++){
-        float angle = ofMap(i, 0, total, 0, TWO_PI);
-        float y = (radius * sin(angle));
-        float color = colorEnd - (i * (colorEnd/total));
+    
+    for(int i = 0; i < characters.size(); i++){
+        vector<ofPolyline> lines = characters[i].getOutline();
         
-        float sinOfTime = sin((time+(i*0.2)) * 3);
-        float newY = -100 + y + ofMap(sinOfTime, -1, 1, 0 , radius);
-        
-        
-        ofSetColor(colors[count].x, colors[count].y, colors[count].z);
-        
-        //ofEnableDepthTest();
-        cam.begin();
-            ofPushMatrix();
-                ofTranslate(-(680/2),  newY, -(200 * i));
-                //ofNoFill();
-                font.drawStringAsShapes("BAUHAUS", 0, 0);
-                //ofDrawRectangle(0, 0, 680, 100);
-            ofPopMatrix();
-        cam.end();
-        
-        if(count == 3){
-            count = 0;
-        } else {
-            count++;
+        for(int j = 0; j < lines.size(); j++){
+            ofPolyline line = lines[j].getResampledBySpacing(5);
+            
+            for (int i = 0; i < line.size(); i += jumpDots) {
+                ofPoint point = line[i];
+                
+                for (int m = 1; m < coutDot; m++) {
+                    float depthZ = (m * spaceZdots);
+                    float noiseZ = ofNoise(2 * cos(depthZ), 2 * sin(depthZ)) * depthZ;
+                    float sinOfTimeX = sin((time) * 0.5);
+                    float sinOfTimeY = sin((time) * 0.5);
+                    float sinOfTimeZ = sin((time) * 2);
+                    float moveMicro = scaledVol * 100;
+//                    float newX = ofMap(sinOfTimeX, -1, 1, 0, ofRandom(-moveMicro, moveMicro));
+//                    float newY = ofMap(sinOfTimeY, -1, 1, 0, ofRandom(-moveMicro, moveMicro));
+                    float newX = ofRandom(-moveMicro, moveMicro);
+                    float newY = ofRandom(-moveMicro, moveMicro);
+                    float newZ = ofRandom(-(moveMicro + depthZ), (moveMicro + depthZ)) ;
+                    
+                    float newRotX = ofMap(sinOfTimeX, -1, 1, -50, 50);
+                    float newRotY = ofMap(sinOfTimeY, -1, 1, -50, 50);
+                    
+                    float rotateY = ofRandom(0, newRotY);
+                    float rotateX = ofRandom(0, newRotX);
+                    float x = point.x + 0;
+                    float y = point.y + 0;
+                    
+                    
+                    ofPushMatrix();
+                    ofSetColor(maxColor - (m * (maxColor/coutDot)));
+                    ofRotateY(rotateY);
+                    ofRotateX(rotateX);
+                    ofTranslate(x, -y + newY, newZ);
+                    
+                    ofDrawCircle(0, 0, sizeCir);
+                    ofPopMatrix();
+                }
+            }
         }
-        
     }
-        
-}
+    ofPopMatrix();
+    cam.end();
     
+    //ofSetColor(255);
+    //ofDrawCircle(100, 100, scaledVol * 190);
+    //cout << scaledVol * 30 << endl;
+}
+
+//--------------------------------------------------------------
+void ofApp::audioIn(float * input, int bufferSize, int nChannels){
+    
+    float curVol = 0.0;
+    int numCounted = 0;
+    
+    for (int i = 0; i < bufferSize; i++){
+        left[i]        = input[i*2]*0.5;
+        right[i]    = input[i*2+1]*0.5;
+        
+        curVol += left[i] * left[i];
+        curVol += right[i] * right[i];
+        numCounted+=2;
+    }
+    
+    curVol /= (float)numCounted;
+    curVol = sqrt( curVol );
+    
+    smoothedVol *= 0.93;
+    smoothedVol += 0.07 * curVol;
+    bufferCounter++;
+}
    
 
 //--------------------------------------------------------------
@@ -84,7 +156,7 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    cout << "drag" << endl;
 }
 
 //--------------------------------------------------------------

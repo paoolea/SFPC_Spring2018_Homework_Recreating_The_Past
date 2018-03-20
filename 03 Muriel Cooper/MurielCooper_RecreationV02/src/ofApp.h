@@ -21,11 +21,30 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
-    ofTrueTypeFont font;
-
-    float total;
-    float count;
-    ofEasyCam cam;
+    void loadCharacters(string s);
     
-    vector <ofPoint> colors;
+    ofEasyCam cam;
+    vector<ofTTFCharacter> characters;
+    ofPoint centerCharacter(string s);
+    vector <string> vMyString;
+    ofTrueTypeFont font;
+    string myString;
+    
+    float count;
+    
+    
+    /////////////////
+    void audioIn(float * input, int bufferSize, int nChannels);
+    
+    vector <float> left;
+    vector <float> right;
+    vector <float> volHistory;
+    
+    int bufferCounter;
+    int drawCounter;
+    
+    float smoothedVol;
+    float scaledVol;
+    
+    ofSoundStream soundStream;
 };
