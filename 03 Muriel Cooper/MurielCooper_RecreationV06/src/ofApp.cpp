@@ -64,7 +64,7 @@ void ofApp::draw(){
     
    // cam.begin();
     ofPushMatrix();
-    ofTranslate(stageW/2, stageH/2);
+    ofTranslate(stageW/2, stageH/2 - 20);
     ofTranslate(centerCharacter(myString));
 
     for(int i = 0; i < total; i++){
@@ -93,7 +93,6 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    cout << "drag" << endl;
 }
 
 //--------------------------------------------------------------

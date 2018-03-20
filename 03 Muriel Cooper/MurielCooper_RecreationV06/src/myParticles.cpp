@@ -52,8 +52,8 @@ void myParticles::draw(){
 
 //--------------------------------------------------------------
 void myParticles::behaviors(){
-    ofVec3f newArrive = arrive(target);
-    ofVec3f mouse = ofVec3f(ofGetMouseX(), ofGetMouseY(), 0);
+    ofVec3f newArrive = arrive(target); // return to real position
+    ofVec3f mouse = ofVec3f(ofGetMouseX(), ofGetMouseY(), 0); // move mouse
     ofVec3f newflee = flee(mouse);
     
     newflee = newflee*5;

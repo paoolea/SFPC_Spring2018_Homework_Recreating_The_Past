@@ -79,7 +79,7 @@ void ofApp::draw(){
                     float sinOfTimeX = sin((time) * 0.5);
                     float sinOfTimeY = sin((time) * 0.5);
                     float sinOfTimeZ = sin((time) * 2);
-                    float moveMicro = scaledVol * 100;
+                    float moveMicro = 1;
 //                    float newX = ofMap(sinOfTimeX, -1, 1, 0, ofRandom(-moveMicro, moveMicro));
 //                    float newY = ofMap(sinOfTimeY, -1, 1, 0, ofRandom(-moveMicro, moveMicro));
                     float newX = ofRandom(-moveMicro, moveMicro);
