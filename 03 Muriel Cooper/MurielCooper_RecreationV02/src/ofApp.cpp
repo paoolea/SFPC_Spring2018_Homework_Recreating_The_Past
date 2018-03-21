@@ -70,8 +70,8 @@ void ofApp::draw(){
         for(int j = 0; j < lines.size(); j++){
             ofPolyline line = lines[j].getResampledBySpacing(5);
             
-            for (int i = 0; i < line.size(); i += jumpDots) {
-                ofPoint point = line[i];
+            for (int k = 0; k < line.size(); k += jumpDots) {
+                ofPoint point = line[k];
                 
                 for (int m = 1; m < coutDot; m++) {
                     float depthZ = (m * spaceZdots);
