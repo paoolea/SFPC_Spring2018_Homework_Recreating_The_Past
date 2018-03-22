@@ -11,6 +11,7 @@ public:
     void setup();
     void update();
     void draw();
+    void keyPressed(int key);
     
     void loadMicro();
     void loadCharacters(string s);
@@ -45,6 +46,10 @@ public:
     vector <float> right;
     vector <float> volHistory;
     ofSoundStream soundStream;
+    
+    // ------ Fbo ------- //
+    ofFbo screenFbo;
+    ofPixels screenPixels;
     
     // ------ Tracker ------- //
     ofVideoGrabber cam;

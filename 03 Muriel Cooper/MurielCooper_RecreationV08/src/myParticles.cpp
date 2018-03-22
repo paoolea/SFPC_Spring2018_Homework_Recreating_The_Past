@@ -15,6 +15,7 @@ void myParticles::setup(ofVec3f pos){
     float ranVel = 1;
     radius = 1;
     maxSpeed = 10;
+    maxSpeedR = 0;
     maxForce = 1;
     areaDectect = 30;
     target = pos;
@@ -25,8 +26,6 @@ void myParticles::setup(ofVec3f pos){
     // mag()  == length()
     // setMag() == scale() or 10 * p.normalize()
     // mult() == v * 3
-    
-   
 }
 
 //--------------------------------------------------------------
@@ -67,10 +66,10 @@ void myParticles::applyForce(ofVec3f f){
 ofVec3f myParticles::arrive(ofVec3f t){ // return to position
     ofVec3f desired = t - position;
     float d = desired.length(); // mag()
-    float speed = maxSpeed;
+    float speed = maxSpeedR;
     float dif = 100;
 
-    if(d < dif) speed = ofMap(d, 0, dif, 0, maxSpeed);
+    if(d < dif && reset) speed = ofMap(d, 0, dif, 0, maxSpeedR);
 
     desired.scale(speed);
     ofVec3f steer = desired - velocity;
@@ -92,6 +91,22 @@ ofVec3f myParticles::flee(ofVec3f t){ // repele
     } else {
         return ofVec3f(0, 0, 0);
         
+    }
+}
+
+//--------------------------------------------------------------
+void myParticles::keyPressed(int key){
+    if(key == OF_KEY_DOWN){
+        maxSpeedR = 10;
+        reset = true;
+        
+//        position.x = target.x;
+//        position.y = target.y;
+    }
+    
+    if(key == OF_KEY_UP){
+        maxSpeedR = 0;
+        reset = false;
     }
 }
 

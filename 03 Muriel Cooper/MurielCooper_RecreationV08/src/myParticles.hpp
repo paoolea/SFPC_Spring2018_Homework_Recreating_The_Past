@@ -14,6 +14,7 @@ public:
     void setup(ofVec3f pos);
     void update();
     void draw();
+    void keyPressed(int key);
     
     void behaviors(float x, float y);
     void applyForce(ofVec3f f);
@@ -27,6 +28,8 @@ public:
     
     float radius;
     float maxSpeed;
+    float maxSpeedR;
     float maxForce;
     float areaDectect;
+    bool reset;
 };

@@ -18,12 +18,30 @@ void ofApp::setup(){
     tracker.setRescale(.5);
     
     // ------ Particles ------- //
-    total = 1006;
-    mParticles.resize(total);
+    //total = 1006;
+    //mParticles.resize(total);
+    
     
     // ------ Font ------- //
     font.load("fonts/HelveticaNeueLTStd-Blk.otf", 150, true, true, true);
-    myString = "BAUHAUS";
+    myString = "SFPC-NY";
+    
+    
+    // ------ FBO ------- //
+    screenFbo.allocate(ofGetWidth(), ofGetHeight());
+    //cout << screenFbo.getWidth() << "" << screenFbo.getHeight() << endl;
+    screenFbo.begin();
+    ofClear(0, 0, 0, 255);
+    ofSetColor(255);
+    ofPushMatrix();
+        ofTranslate(180, ofGetHeight()/2 + 50);
+        font.drawString(myString, 0, 0);
+    ofPopMatrix();
+    screenFbo.end();
+    screenFbo.readToPixels(screenPixels);
+    
+
+    // ------ Load Particles ------- //
     loadCharacters(myString);
     loadMicro();
     
@@ -46,7 +64,7 @@ void ofApp::update(){
     guiSpeed = (scaledVol * 15) + 5;
     guiArea = ((scaledVol + 0.5) * 50);
     
-    for (int i = 0; i < total; i++) {
+    for (int i = 0; i < mParticles.size(); i++) {
         mParticles[i].areaDectect = guiArea;
         mParticles[i].maxSpeed = guiSpeed;
         mParticles[i].maxForce = guiForce;
@@ -73,7 +91,7 @@ void ofApp::draw(){
     
     // --------- TRACKER --------- //
     ofSetColor(255);
-  //  tracker.draw();
+   //  tracker.draw();
     ofVec2f mouth = tracker.getImageFeature(ofxFaceTracker::INNER_MOUTH).getCentroid2D();
     float mouthX = ofGetWidth() - mouth.x;
     float mouthY = mouth.y;
@@ -84,11 +102,13 @@ void ofApp::draw(){
     float time = ofGetElapsedTimef() * 1.5;
     float stageW = ofGetWidth();
     float stageH = ofGetHeight();
+
+    //screenFbo.draw(0,0);
     
     ofPushMatrix();
     ofTranslate(0, 0);
     
-    for(int i = 0; i < total; i++){
+    for(int i = 0; i < mParticles.size(); i++){
         mParticles[i].behaviors(mouthX, mouthY);
         mParticles[i].update();
         mParticles[i].draw();
@@ -100,6 +120,44 @@ void ofApp::draw(){
     gui.draw();
 }
 
+
+
+
+//--------------------------------------------------------------
+void ofApp::loadCharacters(string s) {
+    characters = font.getStringAsPoints(s);
+    
+    for(int i = 0; i < characters.size(); i++){
+        vector<ofPolyline> lines = characters[i].getOutline();
+        
+        for(int j = 0; j < lines.size(); j++){
+            ofPolyline line = lines[j].getResampledBySpacing(5);
+            
+            for (int k = 0; k < line.size(); k++) {
+                ofPoint point = line[k];
+                float x = point.x + 180;
+                float y = point.y + ofGetHeight()/2 + 50;
+                myParticles temp;
+                mParticles.push_back(temp);
+                mParticles[coutPar].setup(ofVec3f(x, y, 0));
+                coutPar++;
+            }
+        }
+    }
+    
+    for (int i = 0; i < 200000; i++){
+        ofPoint m = ofPoint(ofRandom(0, ofGetWidth()), ofRandom(0, ofGetHeight()));
+        ofColor col = screenPixels.getColor(m.x, m.y);
+        if (col.r > 127) {
+            myParticles temp;
+            mParticles.push_back(temp);
+            mParticles[coutPar].setup(ofVec3f(m.x, m.y, 0));
+            coutPar++;
+        }
+    }
+    
+   // cout << "total dots: " << coutPar << endl;
+}
 
 //--------------------------------------------------------------
 void ofApp::audioIn(float * input, int bufferSize, int nChannels){
@@ -125,30 +183,6 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 }
 
 //--------------------------------------------------------------
-void ofApp::loadCharacters(string s) {
-    characters = font.getStringAsPoints(s);
-    
-    for(int i = 0; i < characters.size(); i++){
-        vector<ofPolyline> lines = characters[i].getOutline();
-        
-        for(int j = 0; j < lines.size(); j++){
-            ofPolyline line = lines[j].getResampledBySpacing(5);
-            
-            for (int k = 0; k < line.size(); k++) {
-                ofPoint point = line[k];
-                float x = point.x + 120;
-                float y = point.y + ofGetHeight()/2 + 50;
-                
-                mParticles[coutPar].setup(ofVec3f(x, y, 0));
-                coutPar++;
-            }
-        }
-    }
-    
-    cout << "total dots: " << coutPar << endl;
-}
-
-//--------------------------------------------------------------
 void ofApp::loadMicro(){
     soundStream.printDeviceList();
     int bufferSize = 256;
@@ -169,4 +203,11 @@ void ofApp::loadMicro(){
 ofPoint ofApp::centerCharacter(string s) {
     auto bounds = font.getStringBoundingBox(s, 0, 0);
     return ofPoint(-bounds.width/2, bounds.height/2);
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){
+    for(int i = 0; i < mParticles.size(); i++){
+        mParticles[i].keyPressed(key);
+    }
 }
