@@ -29,38 +29,38 @@ void ofApp::update(){
 void ofApp::draw(){
     
     camera.draw(camW, 0, -camW, camH);
-    // unsigned char * pix = camera.getPixels();
-    //    ofPushMatrix();
-    //    ofTranslate(camW*2, 0);
-    //    for(int x = 0; x < camera.getWidth(); x += 10){
-    //        for(int y = 0; y < camera.getHeight(); y += 10){
-    //            ofPixels color = camera.getPixels();
-    //            float brightness = color.getColor(x, y).getBrightness();
-    //            float mapB = ofMap(brightness, 0, 255, guiMin, guiMax);
-    //
-    //            ofDrawCircle(-x, y, mapB);
-    //
-    //        }
-    //    }
-    //    ofPopMatrix();
+     //unsigned char * pix = camera.getPixels();
+        ofPushMatrix();
+        ofTranslate(camW*2, 0);
+        for(int x = 0; x < camera.getWidth(); x += 10){
+            for(int y = 0; y < camera.getHeight(); y += 10){
+                ofPixels color = camera.getPixels();
+                float brightness = color.getColor(x, y).getBrightness();
+                float mapB = ofMap(brightness, 0, 255, guiMin, guiMax);
     
-    ofPushMatrix();
-    ofTranslate(camW, 0);
-    for(int x = 0; x < camW; x += 10){
-        for(int y = 0; y < camH; y += 10){
-            ofPixels pix = camera.getPixels();
-            ofColor color = pix.getColor(x, y);
-            float intensity = color.getLightness();
-            
-            if (intensity >= 150) {
-                ofVec3f pos(x, y, 0.0);
-                mesh.addVertex(pos);
-                mesh.addColor(color);
+                ofDrawCircle(-x, y, mapB);
+    
             }
         }
-    }
-    mesh.draw();
-    ofPopMatrix();
+        ofPopMatrix();
+    
+//    ofPushMatrix();
+//    ofTranslate(camW, 0);
+//    for(int x = 0; x < camW; x += 10){
+//        for(int y = 0; y < camH; y += 10){
+//            ofPixels pix = camera.getPixels();
+//            ofColor color = pix.getColor(x, y);
+//            float intensity = color.getLightness();
+//
+//            if (intensity >= 150) {
+//                ofVec3f pos(x, y, 0.0);
+//                mesh.addVertex(pos);
+//                mesh.addColor(color);
+//            }
+//        }
+//    }
+//    mesh.draw();
+//    ofPopMatrix();
     
     
     
